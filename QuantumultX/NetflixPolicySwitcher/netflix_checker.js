@@ -8,7 +8,7 @@ const $ = new Env('Netflix 解锁检测')
 let policyName = $.getval('Helge_0x00.Netflix_Policy') || 'Netflix'
 let debug = $.getval('Helge_0x00.Netflix_Debug') === 'true'||'true'
 let retry = $.getval('Helge_0x00.Netflix_Retry') === 'true'
-let t = parseInt($.getval('Helge_0x00.Netflix_Timeout')) || 4000
+let t = parseInt($.getval('Helge_0x00.Netflix_Timeout')) || 8000
 let sortByTime = $.getval('Helge_0x00.Netflix_Sort_By_Time') === 'true'
 let concurrency = parseInt($.getval('Helge_0x00.Netflix_Concurrency')) || 10
 
@@ -103,7 +103,6 @@ function getFilmPage(filmId, policyName) {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
       },
-      timeout: t,
     }
     $task.fetch(request).then(
       response => {
