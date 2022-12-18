@@ -107,10 +107,11 @@ function getFilmPage(filmId, policyName) {
     }
     $task.fetch(request).then(
       response => {
-        let {
-          statusCode,
-          headers: { Location: location, 'X-Originating-URL': originatingUrl },
-        } = response
+        // let {
+        //   statusCode,
+        //   headers: { Location: location, 'X-Originating-URL': originatingUrl },
+        // } = response
+        let statusCode = response.statusCode
 
         if (statusCode === 403) {
           reject('Not Available')
@@ -131,7 +132,7 @@ function getFilmPage(filmId, policyName) {
             }
           }
 
-          let url = location ?? originatingUrl
+          let url = response.headers['X-Originating-URL']
           let region = url.split('/')[3]
           region = region.split('-')[0]
           if (region === 'title') {
