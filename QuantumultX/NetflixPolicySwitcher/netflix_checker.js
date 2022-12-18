@@ -6,7 +6,7 @@ const STATUS_ERROR = -2 // 检测异常
 
 const $ = new Env('Netflix 解锁检测')
 let policyName = $.getval('Helge_0x00.Netflix_Policy') || 'Netflix'
-let debug = $.getval('Helge_0x00.Netflix_Debug') === 'true'
+let debug = $.getval('Helge_0x00.Netflix_Debug') === 'true'||'true'
 let retry = $.getval('Helge_0x00.Netflix_Retry') === 'true'
 let t = parseInt($.getval('Helge_0x00.Netflix_Timeout')) || 8000
 let sortByTime = $.getval('Helge_0x00.Netflix_Sort_By_Time') === 'true'
