@@ -94,10 +94,10 @@ async function testPolicies(policyName, policies = []) {
 
 function getFilmPage(filmId, policyName) {
   return new Promise((resolve, reject) => {
+
     let request = {
       url: `https://www.netflix.com/title/${filmId}`,
       opts: {
-        redirection: false,
         policy: policyName,
       },
       headers: {
