@@ -101,7 +101,6 @@ function getFilmPage(filmId, policyName) {
         policy: policyName,
       },
       headers: {
-        'Accept-Language': 'en',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
       },
     }
@@ -112,7 +111,7 @@ function getFilmPage(filmId, policyName) {
         //   headers: { Location: location, 'X-Originating-URL': originatingUrl },
         // } = response
         let statusCode = response.statusCode
-
+        console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, X-Originating-URL: ${response.headers['X-Originating-URL']}, Location: ${response.headers['location']}`)
         if (statusCode === 403) {
           reject('Not Available')
           return
@@ -124,13 +123,13 @@ function getFilmPage(filmId, policyName) {
         }
 
         if (statusCode === 302 || statusCode === 301 || statusCode === 200) {
-          if (debug) {
-            if (statusCode === 200) {
-              console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, X-Originating-URL: ${originatingUrl}`)
-            } else {
-              console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, Location: ${location}`)
-            }
-          }
+          // if (debug) {
+          //   if (statusCode === 200) {
+          //     console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, X-Originating-URL: ${response.headers['X-Originating-URL']}`)
+          //   } else {
+          //     console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, Location: ${response.headers['location']}`)
+          //   }
+          // }
 
           let url = response.headers['X-Originating-URL']
           let region = url.split('/')[3]
