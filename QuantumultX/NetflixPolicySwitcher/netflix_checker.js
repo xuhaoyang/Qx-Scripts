@@ -106,10 +106,6 @@ function getFilmPage(filmId, policyName) {
     }
     $task.fetch(request).then(
       response => {
-        // let {
-        //   statusCode,
-        //   headers: { Location: location, 'X-Originating-URL': originatingUrl },
-        // } = response
         let statusCode = response.statusCode
         if(debug) console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, X-Originating-URL: ${response.headers['X-Originating-URL']}`)
         if (statusCode === 403) {

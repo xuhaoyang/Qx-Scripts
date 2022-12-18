@@ -184,24 +184,20 @@ async function testPolicies(policies = []) {
 
 function getFilmPage(filmId, policyName) {
   return new Promise((resolve, reject) => {
+
     let request = {
       url: `https://www.netflix.com/title/${filmId}`,
       opts: {
-        redirection: false,
         policy: policyName,
       },
       headers: {
-        'Accept-Language': 'en',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
       },
     }
     $task.fetch(request).then(
       response => {
-        let {
-          statusCode,
-          headers: { Location: location, 'X-Originating-URL': originatingUrl },
-        } = response
-
+        let statusCode = response.statusCode
+        if(debug) console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, X-Originating-URL: ${response.headers['X-Originating-URL']}`)
         if (statusCode === 403) {
           reject('Not Available')
           return
@@ -212,16 +208,8 @@ function getFilmPage(filmId, policyName) {
           return
         }
 
-        if (statusCode === 302 || statusCode === 301 || statusCode === 200) {
-          if (debug) {
-            if (statusCode === 200) {
-              console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, X-Originating-URL: ${originatingUrl}`)
-            } else {
-              console.log(`${policyName} filmId: ${filmId}, statusCode: ${statusCode}, Location: ${location}`)
-            }
-          }
-
-          let url = location ?? originatingUrl
+        if (statusCode === 200) {
+          let url = response.headers['X-Originating-URL']
           let region = url.split('/')[3]
           region = region.split('-')[0]
           if (region === 'title') {
